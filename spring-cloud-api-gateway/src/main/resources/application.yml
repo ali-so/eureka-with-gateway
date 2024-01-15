@@ -1,0 +1,29 @@
+server:
+  port: 9998
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: users-ws
+          predicates:
+            - Path=/users-ws/**
+          uri: localhost:2513
+        - id: account-ws
+          predicates:
+            - Path=/account-ws/**
+          uri: localhost:14568
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8011/eureka
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
